@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout
+					pattern="%d{ISO8601} %highlight{%-5level }{FATAL=bright magenta}[%style{%t}{blue}] %style{%C{-1}}{yellow}: %msg%n%throwable"
+					disableAnsi="false"/>
+		</Console>
+
+		<RollingFile name="RollingFile"
+					 fileName="logs/safetynet-alerts-backend.log"
+					 filePattern="logs/$${date:yyyy-MM}/safetynet-alerts-backend-%d{yyyy-MM-dd-hh-mm}_%i.log.gz">
+			<PatternLayout>
+				<pattern>%d %p %C{1.} [%t] %m%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<OnStartupTriggeringPolicy/>
+				<SizeBasedTriggeringPolicy
+						size="10 MB"/>
+				<TimeBasedTriggeringPolicy/>
+			</Policies>
+		</RollingFile>
+	</Appenders>
+
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="Console"/>
+			<AppenderRef ref="RollingFile"/>
+		</Root>
+	</Loggers>
+
+</Configuration>
